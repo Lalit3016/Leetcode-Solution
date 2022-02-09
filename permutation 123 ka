@@ -1,1 +1,39 @@
-
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>>ans;
+        vector<int> pass;
+        vector<bool>visit(n,false);
+        
+        Permutations(nums,visit,pass,ans,n);
+        return ans;
+    }
+    
+   void Permutations(vector<int> &nums,vector<bool> &visit ,vector<int > &pass ,vector<vector<int>> &ans,int n)
+   {
+       if(pass.size()== n)
+       {
+           ans.push_back(pass);//ans me store karwaya
+           return;
+       }
+       
+       for(int i=0;i<n;i++)
+       {
+           if(visit[i]==true)
+           {
+               continue;
+           }
+           visit[i]=true;
+           pass.push_back(nums[i]);
+           
+           Permutations(nums,visit,pass,ans,n);// double CALL KARWAYA
+           
+          //backtrack;
+           visit[i]=false;
+           pass.erase(pass.end()-1);
+           
+           
+       }
+   }
+};
