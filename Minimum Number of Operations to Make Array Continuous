@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums) {
+        
+        map<int,int>M;
+        
+        vector<int>v;
+        
+        
+        sort(nums.begin(),nums.end());
+        int n=nums.size();
+        
+        for(int i=0;i<n;i++)
+        {
+            if(M[nums[i]]==0)
+            {     // UNIQUENESS CHECK OF ALL ELMENT
+                v.push_back(nums[i]);
+            }   
+            M[nums[i]]++;// ELEMENT COUNTER badhao
+        }
+         sort(v.begin(),v.end());
+        
+        int sum=INT_MAX;
+       for(int i=0;i<n;i++)
+       {
+           int pichhe=nums[i];
+           int samne= nums[i]+ (n-1);
+           
+           int temp =upper_bound(v.begin(),v.end(),samne) - lower_bound(v.begin(),v.end(),pichhe);
+           
+           sum= min(sum,n-temp);
+       }
+        return sum;
+    }
+};
