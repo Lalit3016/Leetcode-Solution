@@ -1,0 +1,36 @@
+class Solution {
+public:
+    
+    //TIME COM - O(N)
+    //SPACE COM - O(N)
+    
+    
+    int subarraySum(vector<int>& nums, int k) {
+        unordered_map<int,int> mpp;
+        int n = nums.size();
+        int currSum = 0;
+        int i = 0;
+        int count = 0;
+        while(i < n){
+            currSum += nums[i];
+
+            if(currSum == k){//barabar hua to ++
+                count += 1;
+            }
+        //     cout<<  mpp[1].first();
+            if(mpp.find(currSum-k) != mpp.end())//element sum ke bad me check karega ki ghatane ke bad
+                                                //ki vo element map me he kya
+             {
+                 //cout<<count<<"pahle";
+                 count += mpp[currSum-k];
+                // cout<<count<<"bad me";
+             }
+              //   cout<< mpp[currSum]<<"p"<<endl;
+             mpp[currSum] += 1;//elment ko place karega 
+         //  cout<< mpp[currSum]<<"bad"<<endl;
+            i += 1;
+
+        }
+        return count;
+    }
+};
