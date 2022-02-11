@@ -1,0 +1,97 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define tt int
+class Solution {
+public:
+   vector<int > nextSmaller(vector<int>arr ,int n)
+   {
+       stack<int>s;
+       s.push(-1);
+
+       vector<int> ans(n);
+
+       for(int i=n-1; i>=0; i--)
+       {
+           int curr=arr[i];//3 2 6 5 1 0
+           while(s.top() != -1 && arr[s.top()] >= curr)
+           {
+               s.pop();//2 3 4
+           }
+           ans[i]=s.top();//1 -1 4 4 -1 -1
+           s.push(i);//1 0
+       }
+
+
+
+       return ans;
+   }
+    vector<int> previousSmaller(vector<int>arr ,int n)
+    {
+        stack<int>s;
+       s.push(-1);
+
+       vector<int> ans(n);
+
+       for(int i=0; i<n; i++)
+       {
+           int curr=arr[i];//3 2 6 5 1 0
+           while(s.top() != -1 && arr[s.top()] >= curr)
+           {
+               s.pop();//2 3 4
+           }
+           ans[i]=s.top();//1 -1 3 4 -1 -1
+           s.push(i);//1 0
+       }
+
+
+
+        return ans;
+    }
+
+    int largestRectangleArea(vector<int>& heights) {
+
+        int n = heights.size();
+
+        vector<int> next(n);
+        next= nextSmaller(heights,n);
+
+
+      //  for(int i=0; i<n; i++)
+
+       vector<int> prev(n);
+        prev= previousSmaller(heights,n);
+
+
+
+     int area =INT_MIN;
+
+        for(int i=0; i<n; i++)
+        {
+            int len= heights[i];//2,1,5,6,2,3
+
+            if(next[i]==-1)
+            {
+                next[i] = n;
+            }
+
+            int bredth= next[i]- prev[i]-1;
+
+            int newArea= len*bredth;
+
+            area= max(area,newArea);
+
+        }
+
+     return area;
+    }
+};
+int main() {
+	// your code goes here
+      Solution sb;
+
+      vector<int > v{2,1,5,6,2,3};
+
+    cout<<  sb.largestRectangleArea(v)<<endl;
+
+}
