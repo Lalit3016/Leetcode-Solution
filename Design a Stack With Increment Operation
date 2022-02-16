@@ -1,0 +1,93 @@
+//C++ SOLUTION
+
+class CustomStack {
+public:
+     int Size;
+    vector<int> stack;
+    CustomStack(int maxSize)
+    {
+        Size = maxSize;
+    }
+
+    void push(int x)
+    {
+        if (stack.size() < Size)
+        {
+            stack.push_back(x);
+        }
+    }
+
+    int pop()
+    {
+        if (!stack.empty())
+        {
+            int x = stack.back();
+            stack.pop_back();
+            return x;
+        }
+        return -1;
+    }
+
+    void increment(int k, int val)
+    {
+        int n = stack.size();
+        for (int i = 0; i < min(k, n); i++)
+        {
+            stack[i] += val;
+        }
+    }
+};
+
+//  JAVA SOLUTION
+
+class CustomStack {
+
+
+    int []value;
+    int []incre;
+    int index;
+    
+   public CustomStack(int maxSize) {
+        this.value=new int[maxSize];
+        this.incre=new int[maxSize];
+        index=-1;
+    }
+    
+    public void push(int x) {
+        if(index+1== value.length)
+            return;
+        index++;
+        value[index]=x;
+        incre[index]=0;
+    }
+    
+    public int pop() {
+        if(index==-1)
+            return -1;
+        
+        int x=value[index];
+        int increment=incre[index];
+        index--;
+        if(index>=0)
+        {
+            incre[index]+=increment;
+        }
+        return (x+increment);
+    }
+    
+   public void increment(int k, int val) {
+        int ind= Math.min(k-1,index);
+        
+        if(index>=0)
+            incre[ind]+=val;
+        
+    }
+}
+
+/**
+ * Your CustomStack object will be instantiated and called as such:
+ * CustomStack obj = new CustomStack(maxSize);
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * obj.increment(k,val);
+ */
