@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define tt int
+    vector <int> max_of_subarrays(int *arr, int n, int k)
+     {
+        vector<int> v;
+       deque<int> deq;
+       for(int i=0;i<k;i++)
+       {
+           while(!deq.empty() && arr[i]>=arr[deq.back()])
+          {
+              deq.pop_back();
+            // cout<<t<<"popwhile ";
+          }
+          deq.push_back(i);
+         // cout<< deq.push_back(i)<<"pushwhile";
+       }
+        //cout<< deq.back()<<"pushwhile";
+
+       v.push_back(arr[deq.front()]);
+       for(int i=k;i<n;i++)
+       {
+           if(!deq.empty() && deq.front()==i-k)
+                deq.pop_front();
+           while(!deq.empty() && arr[i]>=arr[deq.back()])
+         {
+              deq.pop_back();
+         }
+           deq.push_back(i);
+           cout<<arr[deq.front()] <<"pushwhile"<<endl;
+           v.push_back(arr[deq.front()]);
+       }
+
+        cout<<endl;
+       for(int i=0;i<7;i++)
+      cout<<v[i]<<" ";
+     }
+int main() {
+	// your code goes here
+      //Solution sb;
+  //   6 5 3 2 1
+
+   int  v[]={1,2,3,1,4,5,2,3,6};
+
+     max_of_subarrays(v,9,3);
+
+   for(int i=0;i<7;i++)
+      cout<<endl<<v[i]<<" ";
+
+}
