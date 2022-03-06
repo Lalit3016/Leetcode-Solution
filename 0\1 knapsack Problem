@@ -1,47 +1,72 @@
-// { Driver Code Starts
-//Initial template for C++
-
-#include <bits/stdc++.h>
+// // { Driver Code Starts
+#include<bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
-//User function template for C++
 
-class Solution{
-  public:
-    /*You are required to complete this method */
-    int atoi(string str) {
-        //Your code here
-        int ans=0;
-        int sign=1;
-        int i=0;
-        if(str[i]=='-')
-        {
-            sign=-1;
-            i++;
+ // } Driver Code Ends
+class Solution
+{
+    public:
+    //Function to return max value that can be put in knapsack of capacity W.
+    int knapSack(int w, int wt[], int val[], int n) 
+    { 
+     // your code here 
+         
+           int mat[n + 1][w + 1];
+        for (int r = 0; r < w + 1; r++) {
+            mat[0][r] = 0;
         }
-        while(str[i])
-        {
-            if(!(str[i]-'0'>=0 && str[i]-'0'<=9))
-              return -1;
-              
-            ans=ans*10+ str[i]-'0';  
-            i++;
+        for (int c = 0; c < n + 1; c++) {
+            mat[c][0] = 0;
         }
-        return ans*sign;
+         
+          for (int item = 1; item <= n; item++) {
+            for (int capacity = 1; capacity <= w; capacity++) {
+                int maxValWithoutCurr = mat[item - 1][capacity]; // This is guaranteed to exist
+                int maxValWithCurr = 0; // We initialize this value to 0
+                
+                int weightOfCurr = wt[item - 1]; // We use item -1 to account for the extra row at the top
+                if (capacity >= weightOfCurr) { // We check if the knapsack can fit the current item
+                    maxValWithCurr = val[item - 1]; // If so, maxValWithCurr is at least the value of the current item
+                    
+                    int remainingCapacity = capacity - weightOfCurr; // remainingCapacity must be at least 0
+                    maxValWithCurr += mat[item - 1][remainingCapacity]; // Add the maximum value obtainable with the remaining capacity
+                }
+                
+                mat[item][capacity] = max(maxValWithoutCurr, maxValWithCurr); // Pick the larger of the two
+            }
+        }return mat[n][w];
+        
     }
 };
 
 // { Driver Code Starts.
+
 int main()
-{
-	int t;
-	cin>>t;
-	while(t--)
-	{
-		string s;
-		cin>>s;
-		Solution ob;
-		cout<<ob.atoi(s)<<endl;
-	}
+ {
+    //taking total testcases
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        //reading number of elements and weight
+        int n, w;
+        cin>>n>>w;
+        
+        int val[n];
+        int wt[n];
+        
+        //inserting the values
+        for(int i=0;i<n;i++)
+            cin>>val[i];
+        
+        //inserting the weights
+        for(int i=0;i<n;i++)
+            cin>>wt[i];
+        Solution ob;
+        //calling method knapSack()
+        cout<<ob.knapSack(w, wt, val, n)<<endl;
+        
+    }
+	return 0;
 }  // } Driver Code Ends
