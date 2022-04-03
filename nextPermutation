@@ -1,0 +1,25 @@
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+       	int k, l;//4
+        int N=nums.size();
+    	for (k = N - 2; k >= 0; k--) {// 4 3 2
+            if (nums[k] < nums[k + 1]) {
+                break;
+            }
+        }//  1, 2, 3, 6, 5, 4
+    	if (k < 0) {
+    	    reverse(nums.begin(), nums.end());
+    	} else {
+    	    for (l = N - 1; l > k; l--) {//5
+                if (nums[l] > nums[k]) {
+                    break;
+                }
+            } //1, 2, 4, 6, 5, 3
+    	    swap(nums[k], nums[l]);
+    	    reverse(nums.begin() + k + 1,nums.end());// 3 to end
+            //  1, 2, 4, 3, 5, 6
+        }
+      //  return nums;
+    }
+};
