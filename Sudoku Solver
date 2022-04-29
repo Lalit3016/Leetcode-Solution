@@ -1,0 +1,70 @@
+class Solution {
+public:
+    bool check(int row,int col,vector<vector<char>> &M,char val){
+      
+        
+        for(int i=0;i<M.size();i++)
+        {
+            //row check
+            if(M[row][i]==val)
+            {
+                return false;
+            }
+            
+            // col check
+            
+            if(M[i][col]==val)
+            {
+                return false;
+            }
+            
+            //check 3*3 matrix
+            if(M[3*(row/3)+i/3][3*(col/3)+ i%3] ==val)
+            {
+                return false;
+            }
+        }return true;
+        
+    }
+    
+    
+    //
+    bool solution(vector<vector<char>>& M)
+    {
+        int n=M.size();
+        
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                //if cell is empty
+                if(M[i][j]=='.')
+                {
+                    for(char val='1';val<='9';val++)
+                    {
+                 if (check(i,j,M,val))
+                        {
+                           M[i][j]=val;
+                     
+                   //  recursive CALL
+                       bool moveAhead=solution(M);
+                     if(moveAhead)
+                         return true;
+                     else{
+                         //backtrack
+                         M[i][j]='.';
+                         }
+                       
+                       }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+        
+    void solveSudoku(vector<vector<char>>& board)     {
+      solution(board);    
+    }
+};
